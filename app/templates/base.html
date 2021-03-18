@@ -71,10 +71,6 @@
     {{ super() }}
     {{ moment.include_moment() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/css/intlTelInput.css">
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.4/js/intlTelInput-jquery.min.js"></script>
     <script>
         $("#verification_phone").css({position: 'absolute', top: '-9999px', left: '-9999px'});
