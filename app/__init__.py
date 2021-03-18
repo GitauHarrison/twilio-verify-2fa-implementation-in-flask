@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
+from flask_moment import Moment
 from config import Config
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
@@ -17,6 +18,7 @@ login.login_view = 'login'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
+moment = Moment(app)
 
 
 def start_ngrok():
