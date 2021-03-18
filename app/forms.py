@@ -84,3 +84,7 @@ class Enable2faForm(FlaskForm):
 class Confirm2faForm(FlaskForm):
     token = StringField('Token')
     submit = SubmitField()
+
+
+class Disable2faForm(FlaskForm):
+    submit = SubmitField('Disable 2fa')

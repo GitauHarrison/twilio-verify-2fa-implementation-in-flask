@@ -5,7 +5,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import db, app
 from app.models import User
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm,\
-    ResetPasswordForm, EditProfileForm, Enable2faForm, Confirm2faForm
+    ResetPasswordForm, EditProfileForm, Enable2faForm, Confirm2faForm,\
+    Disable2faForm
 from app.email import send_password_reset_email
 from datetime import datetime
 from twilio.rest import Client, TwilioException
@@ -32,7 +33,7 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
         if user.two_factor_enabled():
-            request_verification_token(user.verififcation_phone)
+            request_verification_token(user.verification_phone)
             session['username'] = user.username
             session['phone'] = user.verification_phone
             return redirect(url_for(
@@ -194,7 +195,7 @@ def verify_2fa():
         if check_verification_token(phone, form.token.data):
             del session['phone']
             if current_user.is_authenticated:
-                current_user.verififcation_phone = phone
+                current_user.verification_phone = phone
                 db.session.commit()
                 flash('Two-factor authentication is now enabled')
                 return redirect(url_for('home'))
@@ -208,5 +209,20 @@ def verify_2fa():
                 return redirect(url_for(next_page))
         form.token.errors.append('Invalid token')
     return render_template('verify_2fa.html',
-                           form=form
+                           form=form,
+                           title='Verify 2fa'
+                           )
+
+
+@app.route('/disable_2fa', methods=['GET', 'POST'])
+def disable_2fa():
+    form = Disable2faForm()
+    if form.validate_on_submit():
+        current_user.verification_phone = None
+        db.session.commit()
+        flash('Two-factor authentication is now disabled')
+        return redirect(url_for('home'))
+    return render_template('disable_2fa.html',
+                           form=form,
+                           title='Disable 2fa'
                            )
