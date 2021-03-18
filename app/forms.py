@@ -4,6 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField,\
 from wtforms.validators import Email, DataRequired, EqualTo, ValidationError,\
     Length
 from app.models import User
+import phonenumbers
 
 
 class LoginForm(FlaskForm):
@@ -65,3 +66,16 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+
+class Enable2faForm(FlaskForm):
+    verification_phone = StringField('Phone', validators=[DataRequired()])
+    submit = SubmitField('Enable 2fa')
+
+    def validate_verification_phone(self, verification_phone):
+        try:
+            p = phonenumbers.parse(verification_phone.data)
+            if not phonenumbers.is_valid_number(p):
+                raise ValueError
+        except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
+            raise ValidationError('Invalid phone number')
