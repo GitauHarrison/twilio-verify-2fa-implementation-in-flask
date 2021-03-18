@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import db, app
 from app.models import User
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm,\
-    ResetPasswordForm, EditProfileForm, Enable2faForm
+    ResetPasswordForm, EditProfileForm, Enable2faForm, Confirm2faForm
 from app.email import send_password_reset_email
 from datetime import datetime
 from twilio.rest import Client, TwilioException
@@ -36,7 +36,7 @@ def login():
             session['username'] = user.username
             session['phone'] = user.verification_phone
             return redirect(url_for(
-                'verify_2fa', 
+                'verify_2fa',
                 next=next_page,
                 remember='1' if form.remember_me.data else '0'
             ))
@@ -182,5 +182,31 @@ def enable_2fa():
         return redirect(url_for('verify_2fa'))
     return render_template('enable_2fa.html',
                            title='Enable 2fa',
+                           form=form
+                           )
+
+
+@app.route('/verify_2fa', methods=['GET', 'POST'])
+def verify_2fa():
+    form = Confirm2faForm()
+    if form.validate_on_submit():
+        phone = session['phone']
+        if check_verification_token(phone, form.token.data):
+            del session['phone']
+            if current_user.is_authenticated:
+                current_user.verififcation_phone = phone
+                db.session.commit()
+                flash('Two-factor authentication is now enabled')
+                return redirect(url_for('home'))
+            else:
+                username = session['username']
+                del session['username']
+                user = User.query.filter_by(username=username).first()
+                next_page = request.args.get('next')
+                remember = request.args.get('remember', '0') == '1'
+                login_user(user, remember=remember)
+                return redirect(url_for(next_page))
+        form.token.errors.append('Invalid token')
+    return render_template('verify_2fa.html',
                            form=form
                            )

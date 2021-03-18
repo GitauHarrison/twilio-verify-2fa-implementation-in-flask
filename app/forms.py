@@ -79,3 +79,8 @@ class Enable2faForm(FlaskForm):
                 raise ValueError
         except (phonenumbers.phonenumberutil.NumberParseException, ValueError):
             raise ValidationError('Invalid phone number')
+
+
+class Confirm2faForm(FlaskForm):
+    token = StringField('Token')
+    submit = SubmitField()
