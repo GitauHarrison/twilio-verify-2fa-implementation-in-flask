@@ -161,3 +161,19 @@ def check_verification_token(phone, token):
     except TwilioException:
         return False
     return result.status == 'approved'
+
+
+@app.route('/enable_2fa', methods=['GET', 'POST'])
+@login_required
+def enable_2fa():
+    form = Enable2faForm()
+    if form.validate_on_submit():
+        session['phone'] = form.verification_phone.data
+        request_verification_token(session['phone'])
+        return redirect(url_for('verify_2fa'))
+    return render_template('enable_2fa.html',
+                           title='Enable 2fa',
+                           form=form
+                           )
+
+
