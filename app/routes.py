@@ -28,10 +28,19 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home')
+        if user.two_factor_enabled():
+            request_verification_token(user.verififcation_phone)
+            session['username'] = user.username
+            session['phone'] = user.verification_phone
+            return redirect(url_for(
+                'verify_2fa', 
+                next=next_page,
+                remember='1' if form.remember_me.data else '0'
+            ))
+        login_user(user, remember=form.remember_me.data)
         return redirect(next_page)
     return render_template('login.html',
                            title='Login',
@@ -175,5 +184,3 @@ def enable_2fa():
                            title='Enable 2fa',
                            form=form
                            )
-
-
