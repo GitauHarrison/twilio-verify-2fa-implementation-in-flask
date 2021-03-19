@@ -3,7 +3,7 @@
 
 ### Overview
 
-Twilio Verify API adds an extra layer of security on a user's account, thereby facilitating fraud fight. It allows for a user to verify their identity before fully logging in to their accounts. The verification process authenticates users on the channels that they prefer, say via sms, voice, push notifications or email.
+[Twilio Verify API](https://www.twilio.com/verify) adds an extra layer of security on a user's account, thereby facilitating fraud fight. It allows for a user to verify their identity before fully logging in to their accounts. The verification process authenticates users on the channels that they prefer, say via sms, voice, push notifications or email.
 
 ### About this Application
 
@@ -41,7 +41,7 @@ Every time a user registers and logs into their account, an optional link to ena
 
 ### How to Use this App
 
-1. Register for an account. You will be redirected to the login page when you have successfully registered.
+1. Register for an account. You will be redirected to the login page when you have successfully registered. Log yourself in.
 
 ![Register](app/static/images/register.png)
 
@@ -66,11 +66,11 @@ Click the _Enable 2fa_ button to effect your change
 
 ![Login page](app/static/images/login.png)
 
-6. Enter the login token sent to your phone. You will be redirected to the home page if successful
+6. Enter the login token sent to your phone. You will be redirected to the home page if successful.
 
 ![Login token](app/static/images/login_2fa_token.png)
 
-7. Wrong token rejects your log in attempt
+7. Wrong token causes the app to reject your log in attempt.
 
 ![Imvalid login token](app/static/images/invalid_login_token.png)
 
@@ -80,7 +80,7 @@ Kindly note that this application is a test application using Twilio Verify API.
 
 1. Sign up for Twilio. Get a [free account](https://www.twilio.com/try-twilio?promo=WNPWrR) now.
 
-2. From your [Twilio Console](https://www.twilio.com/console) menu icons, select the _All Product and Services_ button
+2. From your [Twilio Console](https://www.twilio.com/console) menu icons on the far left, select the _All Product and Services_ button
 3. Click on [Verify](https://www.twilio.com/console/verify/services)
 4. Click the _Create Service Now_ button
 5. Provide a friendly name for your application
@@ -89,7 +89,7 @@ Kindly note that this application is a test application using Twilio Verify API.
 
 ### Testing
 
-If you would like to test this application as it is, follow this steps:
+If you would like to test this application as it is, follow these steps:
 
 1. Clone this repo:
 
@@ -106,7 +106,7 @@ $ cd twilio-verify-2fa-implementation-in-flask
 3. Create and activate your virtual environment:
 
 ```python
-$ mkvirtualenv twilio_2fa
+$ mkvirtualenv twilio_2fa # I am using virtualenvwrapper
 ```
 
 4. Install used dependencies within your new virtual environment:
