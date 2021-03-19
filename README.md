@@ -80,7 +80,7 @@ Click the _Enable 2fa_ button to effect your change
 
 ### Caveat
 
-Kindly note that this application is a test application using Twilio Verify API. In order for it to work for you (from a developer point of view), you will need to have a Twilio Account. These are the steps you can follow to ensure you are set up:
+Kindly note that if you want to test this application from your local machine, you will need to have a Twilio Account. These are the steps you can follow to ensure you are set up:
 
 1. Sign up for Twilio. Get a [free account](https://www.twilio.com/try-twilio?promo=WNPWrR) now.
 
