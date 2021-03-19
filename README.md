@@ -39,6 +39,10 @@ Every time a user registers and logs into their account, an optional link to ena
 * Flask moment for beautiful time display
 * Email validator to check for valid/invalid emails
 
+### Deployed Application
+
+* [Work with Twilio Verify API](https://twilio-verify-2fa-test.herokuapp.com/)
+
 ### How to Use this App
 
 1. Register for an account. You will be redirected to the login page when you have successfully registered. Log yourself in.
