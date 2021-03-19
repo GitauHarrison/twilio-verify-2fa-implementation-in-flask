@@ -206,7 +206,7 @@ def verify_2fa():
                 next_page = request.args.get('next')
                 remember = request.args.get('remember', '0') == '1'
                 login_user(user, remember=remember)
-                return redirect(url_for(next_page))
+                return redirect(next_page)
         form.token.errors.append('Invalid token')
     return render_template('verify_2fa.html',
                            form=form,
