@@ -9,7 +9,8 @@ from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm,\
     Disable2faForm
 from app.email import send_password_reset_email
 from datetime import datetime
-from twilio.rest import Client, TwilioException
+from app.twilio_verify_api import request_verification_token,\
+    check_verification_token
 
 
 @app.route('/')
@@ -69,7 +70,7 @@ def register():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('YYou have successfully registered. Login to proceed.')
+        flash('You have successfully registered. Login to proceed.')
         return redirect(url_for('login'))
     return render_template('register.html',
                            title='Register',
@@ -145,32 +146,6 @@ def edit_profile():
                            title='Edit Profile',
                            form=form
                            )
-
-
-def _get_twilio_verify_client():
-    return Client(
-        app.config['TWILIO_ACCOUNT_SID'],
-        app.config['TWILIO_AUTH_TOKEN']
-    ).verify.services(
-        app.config['TWILIO_VERIFY_SERVICE_ID']
-    )
-
-
-def request_verification_token(phone):
-    verify = _get_twilio_verify_client()
-    try:
-        verify.verifications.create(to=phone, channel='sms')
-    except TwilioException:
-        verify.verifications.create(to=phone, channel='call')
-
-
-def check_verification_token(phone, token):
-    verify = _get_twilio_verify_client()
-    try:
-        result = verify.verification_checks.create(to=phone, code=token)
-    except TwilioException:
-        return False
-    return result.status == 'approved'
 
 
 @app.route('/enable_2fa', methods=['GET', 'POST'])
