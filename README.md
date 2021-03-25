@@ -168,7 +168,7 @@ Note the lines beginning with 'Forwarding'. These show the public URLs that ngro
 
 ### Build it Yourself
 
-If you would like to incorporate this feature, try it out by creating your own project line after line. You can follow this [twilio verify implementation in flask](https://github.com/GitauHarrison/notes/blob/master/twilio_verify_2fa.md) guide.
+If you would like to incorporate this feature, try it out by creating your own project line after line. You can follow this [twilio verify implementation in flask](https://github.com/GitauHarrison/notes/blob/master/two_factor_authentication/twilio_verify_2fa.md) guide.
 
 ### Reference
 
