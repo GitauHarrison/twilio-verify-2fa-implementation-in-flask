@@ -145,7 +145,7 @@ The HTTP value may be different from the one shown here because I am using the f
 Another way to obtain `ngrok`'s free public URLs would be to run the command below in a new terminal window:
 
 ```python
-(flask_2fa)$ ngrok http 5000
+(twilio_2fa)$ ngrok http 5000
 
 # Output
 
